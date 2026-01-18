@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Everfree – Admin Panel</title>
+  <link rel="icon" type="image/png" href="images/111.png">
+
+  <!-- Bootstrap & Fonts (Те же, что и везде) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      background-color: #fff8e7;
+      font-family: 'Playfair Display', serif;
+      color: #2e2e2e;
+    }
+
+    header {
+      background-color: #fde3ec;
+      padding: 20px 0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar-brand span {
+        font-size: 1.6rem;
+        color: #e13690;
+    }
+
+    .admin-container {
+      padding: 40px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+      min-height: 60vh;
+    }
+
+    .custom-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 30px;
+      margin-bottom: 40px;
+    }
+
+    h3.section-title {
+      color: #e13690;
+      font-weight: 600;
+      margin-bottom: 25px;
+      border-bottom: 2px solid #fde3ec;
+      padding-bottom: 10px;
+    }
+
+    .form-control {
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      padding: 10px;
+    }
+    .form-control:focus {
+      border-color: #e13690;
+      box-shadow: 0 0 0 0.2rem rgba(225, 54, 144, 0.25);
+    }
+
+    .btn-pink {
+      background-color: #e13690;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: 0.3s ease;
+      width: 100%;
+    }
+    .btn-pink:hover {
+      background-color: #c9247a;
+      color: white;
+    }
+
+    .table-custom {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 10px;
+    }
+    .table-custom th {
+      color: #e13690;
+      font-weight: 600;
+      border-bottom: 2px solid #fde3ec;
+      padding: 10px;
+    }
+    .table-custom td {
+      background: white;
+      padding: 15px;
+      vertical-align: middle;
+      border-top: 1px solid #eee;
+    }
+    .table-custom tr:first-child td:first-child { border-top-left-radius: 10px; }
+    .table-custom tr:first-child td:last-child { border-top-right-radius: 10px; }
+    .table-custom tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+    .table-custom tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+
+    .img-preview {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #eee;
+    }
+
+    .btn-delete {
+      background-color: #fff;
+      border: 1px solid #dc3545;
+      color: #dc3545;
+      padding: 5px 12px;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+    .btn-delete:hover {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    footer {
+      background-color: #ffe1ec;
+      text-align: center;
+      padding: 28px 0;
+      margin-top: 40px;
+      font-size: 14px;
+    }
+    footer h5 { color: #e13690; }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <nav class="navbar navbar-expand-lg" style="background-color: #fde3ec;">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center fw-bold" href="index.html">
+        <img src="images/111.png" alt="Logo" style="height: 40px; margin-right: 10px;">
+        <span>Everfree Admin</span>
+      </a>
+
+      <div class="d-flex">
+        <a href="index.html" class="btn btn-outline-danger btn-sm me-2" style="border-color: #e13690; color: #e13690;">Back Home</a>
+        <a href="index2.html" class="btn btn-pink btn-sm" style="width: auto;">View Shop</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<div class="admin-container">
+
+  <div class="custom-card">
+    <h3 class="section-title">✨ Add New Flower</h3>
+    <form id="addFlowerForm">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Flower Name <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" id="name" required placeholder="e.g. Magic Rose">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Price (₸) <span class="text-danger">*</span></label>
+          <input type="number" class="form-control" id="price" required placeholder="e.g. 25000">
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Category</label>
+        <select class="form-control" id="category">
+          <option value="Bouquet">Bouquet</option>
+          <option value="Box">Box</option>
+          <option value="Single">Single</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Image URL</label>
+        <input type="text" class="form-control" id="imageUrl" placeholder="images/5.jpg or https://...">
+        <div class="form-text" style="color:#888;">Paste a link or local path (e.g. images/5.jpg)</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" id="description" rows="3" placeholder="Enter a gentle description..."></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-pink">Create Flower</button>
+    </form>
+    <div id="msg" class="mt-3"></div>
+  </div>
+
+  <div class="custom-card">
+    <h3 class="section-title">📋 Current Inventory</h3>
+    <div class="table-responsive">
+      <table class="table table-custom">
+        <thead>
+        <tr>
+          <th>Image</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="flowers-table-body">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="container text-center">
+    <h5>Everfree Studio</h5>
+    <p style="color:#666; margin-top:5px;">Admin Panel Control</p>
+    <div style="margin-top:12px; color:#666; font-size:14px">
+      © 2025 Everfree Flowers
+    </div>
+  </div>
+</footer>
+
+<script>
+  const API_URL = 'http://localhost:3001/flowers';
+
+  async function loadFlowers() {
+    try {
+      const response = await fetch(API_URL);
+      const flowers = await response.json();
+
+      const tbody = document.getElementById('flowers-table-body');
+      tbody.innerHTML = '';
+
+      flowers.forEach(flower => {
+        const row = `
+          <tr>
+            <td>
+              <img src="${flower.imageUrl || 'images/default.jpg'}" class="img-preview" alt="img" onerror="this.src='https://placehold.co/60x60?text=No+Img'">
+            </td>
+            <td class="fw-bold">${flower.name}</td>
+            <td><span class="badge bg-secondary" style="background-color:#e13690 !important">${flower.category || 'N/A'}</span></td>
+            <td>${flower.price.toLocaleString()} ₸</td>
+            <td>
+              <button class="btn btn-delete btn-sm" onclick="deleteFlower('${flower._id}')">Delete</button>
+            </td>
+          </tr>
+        `;
+        tbody.innerHTML += row;
+      });
+    } catch (err) {
+      console.error('Error loading flowers:', err);
+    }
+  }
+
+  document.getElementById('addFlowerForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const newFlower = {
+      name: document.getElementById('name').value,
+      price: Number(document.getElementById('price').value),
+      category: document.getElementById('category').value,
+      imageUrl: document.getElementById('imageUrl').value || 'images/5.jpg',
+      description: document.getElementById('description').value
+    };
+
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newFlower)
+      });
+
+      if (response.ok) {
+        document.getElementById('msg').innerHTML = '<div class="alert alert-success">Flower added successfully! 🌸</div>';
+        document.getElementById('addFlowerForm').reset();
+        loadFlowers();
+
+        setTimeout(() => document.getElementById('msg').innerHTML = '', 3000);
+      } else {
+        const errData = await response.json();
+        document.getElementById('msg').innerHTML = `<div class="alert alert-danger">${errData.message}</div>`;
+      }
+    } catch (err) {
+      console.error('Error adding flower:', err);
+    }
+  });
+
+  async function deleteFlower(id) {
+    if(!confirm('Are you sure you want to delete this flower?')) return;
+
+    try {
+      const response = await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        loadFlowers();
+      } else {
+        alert('Failed to delete');
+      }
+    } catch (err) {
+      console.error('Error deleting:', err);
+    }
+  }
+  loadFlowers();
+</script>
+</body>
+</html>
